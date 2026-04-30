@@ -1,15 +1,7 @@
-const express = require("express");
-const cors = require("cors");
+const app = require("./src/app");
 
-const authRoutes = require("./routes/auth.routes");
+const PORT = process.env.PORT || 5000;
 
-const app = express();
-const errorHandler = require("./middleware/error.middleware");
-
-app.use(cors());
-app.use(express.json());
-app.use(errorHandler);
-
-app.use("/api/auth", authRoutes);
-
-module.exports = app;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});

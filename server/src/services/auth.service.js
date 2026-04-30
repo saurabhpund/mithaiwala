@@ -5,6 +5,8 @@ const userModel = require("../models/user.model");
 const registerUser = async (data) => {
   const { name, email, password } = data;
 
+  console.log(data)
+
   const existingUser = await userModel.findUserByEmail(email);
   if (existingUser) {
     throw new Error("User already exists");
@@ -15,8 +17,9 @@ const registerUser = async (data) => {
   await userModel.createUser({
     name,
     email,
-    password: hashedPassword,
+    password_hash: hashedPassword,
     role: "CUSTOMER",
+    created_at: new Date()
   });
 
   return { message: "User registered successfully" };
@@ -30,7 +33,7 @@ const loginUser = async (data) => {
     throw new Error("Invalid credentials");
   }
 
-  const isMatch = await bcrypt.compare(password, user.password_hash);
+  const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
     throw new Error("Invalid credentials");
   }
