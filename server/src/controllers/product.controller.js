@@ -1,4 +1,5 @@
 const productService = require("../services/product.service");
+const { success } = require("../utils/helpers");
 
 const createProduct = async (req, res, next) => {
   try {
@@ -13,7 +14,7 @@ const createProduct = async (req, res, next) => {
 const getProducts = async (req, res, next) => {
   try {
     const products = await productService.getProducts();
-    res.status(200).json(products);
+    return success(res, products, "Products fetched");
   } catch (err) {
     next(err);
   }

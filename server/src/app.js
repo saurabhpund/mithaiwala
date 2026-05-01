@@ -7,10 +7,17 @@ const app = express();
 const errorHandler = require("./middleware/error.middleware");
 const { authenticate, authorize } = require("./middleware/auth.middleware");
 const productRoutes = require("./routes/product.routes");
+const cartRoutes = require("./routes/cart.routes");
+const orderRoutes = require("./routes/order.routes");
+const helmet = require("helmet");
+
 
 app.use(cors());
+app.use(helmet());
 app.use(express.json());
 app.use("/api/products", productRoutes);
+app.use("/api/cart", cartRoutes);
+app.use("/api/orders", orderRoutes);
 
 app.get("/api/test", authenticate, (req, res) => {
   res.json({

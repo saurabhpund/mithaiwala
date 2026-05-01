@@ -1,23 +1,19 @@
 const db = require("../config/db");
+const { productSchema } = require("../validators/product.validator");
 
-const createProduct = async (product) => {
-  const {
-    name,
-    description,
-    price_per_unit,
-    unit,
-    min_order_quantity,
-    is_available,
-  } = product;
+const createProduct = async (req, res, next) => {
+  try {
+    const { error } = productSchema.validate(req.body);
 
-  const [result] = await db.execute(
-    `INSERT INTO products 
-    (name, description, price_per_unit, unit, min_order_quantity, is_available) 
-    VALUES (?, ?, ?, ?, ?, ?)`,
-    [name, description, price_per_unit, unit, min_order_quantity, is_available]
-  );
+    if (error) {
+      throw new Error(error.details[0].message);
+    }
 
-  return result;
+    const result = await productService.addProduct(req.body);
+    res.status(201).json(result);
+  } catch (err) {
+    next(err);
+  }
 };
 
 const getAllProducts = async () => {
