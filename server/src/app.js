@@ -12,7 +12,7 @@ const orderRoutes = require("./routes/order.routes");
 const helmet = require("helmet");
 
 
-app.use(cors());
+app.use(cors({ origin: "http://localhost:5173"}));
 app.use(helmet());
 app.use(express.json());
 app.use("/api/products", productRoutes);

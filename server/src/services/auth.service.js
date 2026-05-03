@@ -5,11 +5,10 @@ const userModel = require("../models/user.model");
 const registerUser = async (data) => {
   const { name, email, password } = data;
 
-  console.log(data)
 
   const existingUser = await userModel.findUserByEmail(email);
   if (existingUser) {
-    throw new Error("User already exists");
+    return { message: "User already exists", status: 400};
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -22,7 +21,7 @@ const registerUser = async (data) => {
     created_at: new Date()
   });
 
-  return { message: "User registered successfully" };
+  return { message: "User registered successfully", status: 200 };
 };
 
 const loginUser = async (data) => {
@@ -30,7 +29,7 @@ const loginUser = async (data) => {
 
   const user = await userModel.findUserByEmail(email);
   if (!user) {
-    throw new Error("Invalid credentials");
+    throw new Error("Invalid credentials",);
   }
 
   const isMatch = await bcrypt.compare(password, user.password);
