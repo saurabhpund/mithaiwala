@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { PiCookie } from "react-icons/pi";
 import {
@@ -17,34 +17,10 @@ import Kajukatli from "../assets/kajukatli.jpg";
 import Motichoor from "../assets/motichoor.jpg";
 import MysorePak from "../assets/gulabjam.jpg";
 import Navbar from "../components/Navbar";
+import API from "../api/axios";
 
 export default function CartPage() {
-  const [cart, setCart] = useState([
-    {
-      id: 1,
-      name: "Kaju Katli",
-      desc: "1 kg Box (Silver Leaf)",
-      price: 850,
-      qty: 1,
-      img: Kajukatli,
-    },
-    {
-      id: 2,
-      name: "Motichoor Ladoo",
-      desc: "500g Box (Pure Ghee)",
-      price: 210,
-      qty: 1,
-      img: Motichoor,
-    },
-    {
-      id: 3,
-      name: "Ghee Mysore Pak",
-      desc: "1 kg Box",
-      price: 620,
-      qty: 1,
-      img: MysorePak,
-    },
-  ]);
+  const [cart, setCart] = useState([]);
 
   /* --------- Handlers --------- */
   const updateQty = (id, type) => {
@@ -55,17 +31,34 @@ export default function CartPage() {
               ...item,
               qty: type === "inc" ? item.qty + 1 : Math.max(1, item.qty - 1),
             }
-          : item
-      )
+          : item,
+      ),
     );
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    API.get("/cart", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        setCart(res.data);
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
   const removeItem = (id) => {
     setCart(cart.filter((item) => item.id !== id));
   };
 
   /* --------- Calculations --------- */
-  const subtotal = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
+  const subtotal = cart.reduce(
+    (acc, item) => acc + item.price_per_unit * item.quantity,
+    0,
+  );
   const delivery = 50;
   const tax = Math.round(subtotal * 0.05);
   const discount = 100;
@@ -90,45 +83,43 @@ export default function CartPage() {
         <div className="flex flex-col lg:flex-row gap-10">
           {/* CART ITEMS */}
           <div className="flex-1">
-            {cart.map((item) => (
+            {cart.map((item, i) => (
               <div
-                key={item.id}
+                key={i}
                 className="flex flex-col md:flex-row items-center gap-4 md:gap-6 bg-white p-4 md:p-6 rounded-2xl shadow mb-5 hover:shadow-md transition"
               >
                 <img
-                  src={item.img}
+                  src={Kajukatli}
                   alt={item.name}
                   className="w-24 h-24 rounded-lg object-cover"
                 />
 
                 <div className="flex-1 w-full">
                   <h3 className="font-bold text-lg">{item.name}</h3>
-                  <p className="text-sm text-[#8c7b75] mb-2">
-                    {item.desc}
-                  </p>
+                  <p className="text-sm text-[#8c7b75] mb-2">{item.desc}</p>
 
-                  <button
+                  {/* <button
                     onClick={() => removeItem(item.id)}
                     className="text-[#be123c] text-sm flex items-center gap-1"
                   >
                     <FiTrash2 /> Remove
-                  </button>
+                  </button> */}
                 </div>
 
                 {/* QTY */}
                 <div className="flex items-center gap-4 border rounded-full px-4 py-2">
-                  <button onClick={() => updateQty(item.id, "dec")}>
+                  {/* <button onClick={() => updateQty(item.id, "dec")}>
                     <FiMinus />
-                  </button>
-                  <span className="font-semibold">{item.qty}</span>
-                  <button onClick={() => updateQty(item.id, "inc")}>
+                  </button> */}
+                  <span className="font-semibold">{item.quantity}</span>
+                  {/* <button onClick={() => updateQty(item.id, "inc")}>
                     <FiPlus />
-                  </button>
+                  </button> */}
                 </div>
 
                 {/* PRICE */}
                 <div className="font-bold text-lg min-w-[80px] text-right">
-                  ₹{item.price * item.qty}
+                  ₹{item.price_per_unit * item.quantity}
                 </div>
               </div>
             ))}
