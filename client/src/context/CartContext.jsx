@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import API from "../api/axios";
 
 const CartContext = createContext();
@@ -37,6 +37,26 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  const updateCart = async (product_id, quantity) => {
+  try {
+    const token = localStorage.getItem("token");
+
+    await API.put(
+      "/cart",
+      { product_id, quantity },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    fetchCart(); // refresh cart after update
+  } catch (err) {
+    console.error(err);
+  }
+};
+
   // 🔹 Remove item
   const removeFromCart = async (product_id) => {
     try {
@@ -52,6 +72,12 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  useEffect(() =>{
+    if (token) {
+        fetchCart();
+    }
+  }, [token]);
+
   return (
     <CartContext.Provider
       value={{
@@ -59,6 +85,7 @@ export const CartProvider = ({ children }) => {
         fetchCart,
         addToCart,
         removeFromCart,
+        updateCart
       }}
     >
       {children}

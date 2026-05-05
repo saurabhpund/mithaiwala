@@ -21,20 +21,18 @@ import API from "../api/axios";
 import { useCart } from "../context/CartContext";
 
 export default function CartPage() {
-  const { cart, fetchCart, removeFromCart } = useCart();
+  const { cart, fetchCart, removeFromCart, updateCart } = useCart();
 
   /* --------- Handlers --------- */
-  const updateQty = (id, type) => {
-    setCart((prev) =>
-      prev.map((item) =>
-        item.id === id
-          ? {
-              ...item,
-              qty: type === "inc" ? item.qty + 1 : Math.max(1, item.qty - 1),
-            }
-          : item,
-      ),
-    );
+  const handleQtyChange = (item, type) => {
+    let newQty;
+    if (type === "inc") {
+      newQty = item.quantity + 250; 
+    } else {
+      newQty = Math.max(250, item.quantity - 250);
+    }
+
+    updateCart(item.product_id, newQty);
   };
 
   useEffect(() => {
@@ -98,13 +96,13 @@ export default function CartPage() {
 
                 {/* QTY */}
                 <div className="flex items-center gap-4 border rounded-full px-4 py-2">
-                  {/* <button onClick={() => updateQty(item.id, "dec")}>
+                  <button onClick={() => handleQtyChange(item, "dec")}>
                     <FiMinus />
-                  </button> */}
+                  </button>
                   <span className="font-semibold">{item.quantity}</span>
-                  {/* <button onClick={() => updateQty(item.id, "inc")}>
+                  <button onClick={() => handleQtyChange(item, "inc")}>
                     <FiPlus />
-                  </button> */}
+                  </button>
                 </div>
 
                 {/* PRICE */}

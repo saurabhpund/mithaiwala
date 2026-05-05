@@ -1,19 +1,16 @@
 const db = require("../config/db");
 const { productSchema } = require("../validators/product.validator");
 
-const createProduct = async (req, res, next) => {
-  try {
-    const { error } = productSchema.validate(req.body);
+const addProduct = async (data) => {
+  const { name, price_per_unit, unit, description, image_url } = data;
 
-    if (error) {
-      throw new Error(error.details[0].message);
-    }
+  const [result] = await db.execute(
+    `INSERT INTO products (name, price_per_unit, unit, description, image_url)
+     VALUES (?, ?, ?, ?, ?)`,
+    [name, price_per_unit, unit, description, image_url]
+  );
 
-    const result = await productService.addProduct(req.body);
-    res.status(201).json(result);
-  } catch (err) {
-    next(err);
-  }
+  return { id: result.insertId, ...data };
 };
 
 const getAllProducts = async () => {
@@ -22,6 +19,6 @@ const getAllProducts = async () => {
 };
 
 module.exports = {
-  createProduct,
+  addProduct,
   getAllProducts,
 };
