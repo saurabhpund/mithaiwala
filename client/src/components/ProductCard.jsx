@@ -1,36 +1,15 @@
+import { useNavigate } from "react-router-dom";
 import API from "../api/axios";
 import Kajukatli from "../assets/kajukatli.jpg";
+import { useCart } from "../context/CartContext";
+import { useState } from "react";
 
 export default function ProductCard({ product }) {
   const { name, price_per_unit, unit } = product;
-  const addToCart = async () => {
-    try {
-      const token = localStorage.getItem("token");
+  const {addToCart} = useCart();
+  const [qty, setQty] = useState(250);
+  const navigate = useNavigate();
 
-      if (!token) {
-        alert("Please login first");
-        return;
-      }
-
-      await API.post(
-        "/cart",
-        {
-          product_id: product.id,
-          quantity: 250, // temporary (grams)
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-
-      alert("Added to cart");
-    } catch (err) {
-      console.error(err);
-      alert("Failed to add to cart");
-    }
-  };
   return (
     <div className="bg-white border rounded-xl p-4 hover:shadow-lg transition">
       {/* Image */}
@@ -43,7 +22,7 @@ export default function ProductCard({ product }) {
       </div>
 
       {/* Title */}
-      <h3 className="font-semibold text-[15px]">{name}</h3>
+      <h3 className="font-semibold text-[15px]" onClick={() => navigate(`/product/${product.id}`)}> {name}</h3>
 
       {/* Description */}
       <p className="text-xs text-[#8c7b75] mb-3">Delicious traditional sweet</p>
@@ -56,7 +35,7 @@ export default function ProductCard({ product }) {
         </div>
 
         <button
-          onClick={addToCart}
+          onClick={() => addToCart(product.id)}
           className="w-8 h-8 flex items-center justify-center rounded-full border hover:bg-[#e11d48] hover:text-white transition"
         >
           +

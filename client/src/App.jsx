@@ -8,6 +8,7 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import CartPage from "./pages/CartPage";
 import Menu from "./pages/MenuPage";
+import ProductPage from "./pages/ProductPage";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -22,6 +23,7 @@ function App() {
           <Route path="/auth/signup" element={<SignupPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/menu" element={<Menu />} />
+          <Route path="/product/:id" element={<ProductPage />} />
         </Routes>
       </BrowserRouter>
     </>

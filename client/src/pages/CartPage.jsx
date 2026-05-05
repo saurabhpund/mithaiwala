@@ -18,9 +18,10 @@ import Motichoor from "../assets/motichoor.jpg";
 import MysorePak from "../assets/gulabjam.jpg";
 import Navbar from "../components/Navbar";
 import API from "../api/axios";
+import { useCart } from "../context/CartContext";
 
 export default function CartPage() {
-  const [cart, setCart] = useState([]);
+  const { cart, fetchCart, removeFromCart } = useCart();
 
   /* --------- Handlers --------- */
   const updateQty = (id, type) => {
@@ -37,24 +38,13 @@ export default function CartPage() {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    API.get("/cart", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => {
-        setCart(res.data);
-      })
-      .catch((err) => console.error(err));
+    fetchCart();
   }, []);
 
-  const removeItem = (id) => {
-    setCart(cart.filter((item) => item.id !== id));
+  const removeItem = (productId) => {
+    removeFromCart(productId);
   };
 
-  /* --------- Calculations --------- */
   const subtotal = cart.reduce(
     (acc, item) => acc + item.price_per_unit * item.quantity,
     0,
@@ -98,12 +88,12 @@ export default function CartPage() {
                   <h3 className="font-bold text-lg">{item.name}</h3>
                   <p className="text-sm text-[#8c7b75] mb-2">{item.desc}</p>
 
-                  {/* <button
-                    onClick={() => removeItem(item.id)}
+                  <button
+                    onClick={() => removeFromCart(item.product_id)}
                     className="text-[#be123c] text-sm flex items-center gap-1"
                   >
                     <FiTrash2 /> Remove
-                  </button> */}
+                  </button>
                 </div>
 
                 {/* QTY */}
