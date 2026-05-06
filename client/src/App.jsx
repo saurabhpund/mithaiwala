@@ -9,6 +9,7 @@ import SignupPage from "./pages/SignupPage";
 import CartPage from "./pages/CartPage";
 import Menu from "./pages/MenuPage";
 import ProductPage from "./pages/ProductPage";
+import AdminProducts from "./admin/page/AdminProduct";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -24,6 +25,9 @@ function App() {
           <Route path="/cart" element={<CartPage />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/product/:id" element={<ProductPage />} />
+
+          <Route path="/admin/products" element={<AdminProducts />} />
+          <Route path="/admin/edit/:id" element={<AdminProducts />} />
         </Routes>
       </BrowserRouter>
     </>

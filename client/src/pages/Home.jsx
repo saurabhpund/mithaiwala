@@ -44,9 +44,9 @@ export default function HomePage() {
               Shop Now <FiArrowRight />
             </button>
 
-            <button className="h-14 px-8 border rounded-full hover:bg-[#fff7ed]">
+            <Link to={"/menu"} className="h-14 px-8 border rounded-full grid items-center cursor-pointer hover:bg-[#fff7ed]">
               View Menu
-            </button>
+            </Link>
           </div>
         </div>
 

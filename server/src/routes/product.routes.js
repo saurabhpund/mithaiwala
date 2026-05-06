@@ -14,6 +14,21 @@ router.post(
   productController.createProduct
 );
 
+router.put(
+  "/products/:id",
+  authenticate,
+  authorize("ADMIN"),
+  upload.single("image"),
+  productController.updateProduct
+);
+
+router.delete(
+  "/products/:id",
+  authenticate,
+  authorize("ADMIN"),
+  productController.deleteProduct
+);
+
 // Public
 router.get("/", productController.getProducts);
 router.get("/:id", productController.getProductById);

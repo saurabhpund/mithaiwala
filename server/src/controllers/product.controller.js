@@ -22,6 +22,40 @@ const createProduct = async (req, res) => {
   }
 };
 
+
+const updateProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, price_per_unit, unit, description } = req.body;
+
+    const image_url = req.file?.path;
+
+    await productService.updateProduct(id, {
+      name,
+      price_per_unit,
+      unit,
+      description,
+      image_url,
+    });
+
+    res.json({ message: "Product updated" });
+  } catch (err) {
+    res.status(500).json({ message: "Error updating product" });
+  }
+};
+
+const deleteProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await ProductService.deleteProduct(id);
+
+    res.json({ message: "Product deleted" });
+  } catch (err) {
+    res.status(500).json({ message: "Error deleting product" });
+  }
+};
+
+
 const getProducts = async (req, res, next) => {
   try {
     const products = await productService.getProducts();
@@ -51,5 +85,7 @@ const getProductById = async (req, res) => {
 module.exports = {
   createProduct,
   getProducts,
-  getProductById
+  getProductById,
+  updateProduct,
+  deleteProduct
 };

@@ -7,8 +7,10 @@ const storage = new CloudinaryStorage({
   params: {
     folder: "mithaiwala",
     allowed_formats: ["jpg", "png", "jpeg"],
+
   },
 });
+
 
 const upload = multer({ storage });
 
