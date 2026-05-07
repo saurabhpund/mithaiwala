@@ -2,7 +2,7 @@ const db = require("../config/db");
 const productModel = require("../models/product.model");
 
 const addProduct = async (data) => {
-  const { name, description, price_per_unit, unit, min_order_quantity } = data;
+  const { name, description, price_per_unit, unit, min_order_quantity, image_url } = data;
 
   if (!name || !price_per_unit || !unit) {
     throw new Error("Required fields missing");
@@ -15,6 +15,7 @@ const addProduct = async (data) => {
     unit,
     min_order_quantity: min_order_quantity || 1,
     is_available: true,
+    image_url: image_url || null,
   });
 
   return { message: "Product added successfully" };

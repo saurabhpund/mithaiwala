@@ -3,9 +3,10 @@ import { PiCookie } from "react-icons/pi";
 import { GiCandyCanes, GiIceCreamCone, GiCroissant } from "react-icons/gi";
 import { GiPartyPopper } from "react-icons/gi";
 import { BsCheck } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import API from "../api/axios";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
+import { jwtDecode } from "jwt-decode";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -14,6 +15,7 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const validate = () => {
     const newErrors = {};
@@ -48,7 +50,12 @@ export default function LoginPage() {
 
       console.log("Login success:", res.data);
       localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
+      localStorage.setItem(
+        "user",
+        JSON.stringify(jwtDecode(res.data.token)?.role),
+      );
+
+      navigate("/");
     } catch (err) {
       const message = err.response?.data?.message || "Invalid credentials";
 
@@ -98,7 +105,7 @@ export default function LoginPage() {
               type="email"
               value={email}
               onChange={(e) => {
-                setEmail(e.target.value)
+                setEmail(e.target.value);
                 setErrors((prev) => ({ ...prev, email: "" }));
               }}
               placeholder="owner@mithaiwala.com"
@@ -153,7 +160,6 @@ export default function LoginPage() {
             )}
           </div>
 
-
           {/* Remember me + Forgot password */}
           <div className="flex items-center justify-between mb-8 mt-4">
             <label className="flex items-center gap-2 cursor-pointer select-none">
@@ -189,9 +195,21 @@ export default function LoginPage() {
           {/* Submit */}
           <button
             type="submit"
-            className="w-full h-12 rounded-xl bg-gradient-to-br from-[#ff9966] to-[#e85d04] text-white text-[15px] font-semibold shadow-[0_4px_12px_rgba(232,93,4,0.3)] hover:brightness-105 hover:shadow-[0_6px_20px_rgba(232,93,4,0.42)] active:scale-[0.98] transition-all duration-150 cursor-pointer"
+            disabled={loading}
+            className="w-full h-12 rounded-xl bg-gradient-to-br from-[#ff9966] to-[#e85d04] text-white text-[15px] font-semibold shadow-[0_4px_12px_rgba(232,93,4,0.3)] hover:brightness-105 hover:shadow-[0_6px_20px_rgba(232,93,4,0.42)] active:scale-[0.98] transition-all duration-150 flex items-center justify-center gap-2 disabled:opacity-70"
           >
-            Log In
+            {loading ? (
+              <span className="flex items-center gap-1">
+                Logging in
+                <span className="flex gap-1 ml-1">
+                  <span className="w-1.5 h-1.5 bg-white rounded-full animate-bounce [animation-delay:-0.3s]" />
+                  <span className="w-1.5 h-1.5 bg-white rounded-full animate-bounce [animation-delay:-0.15s]" />
+                  <span className="w-1.5 h-1.5 bg-white rounded-full animate-bounce" />
+                </span>
+              </span>
+            ) : (
+              "Log In"
+            )}
           </button>
         </form>
 

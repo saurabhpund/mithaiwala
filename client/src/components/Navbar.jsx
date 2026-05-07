@@ -3,6 +3,7 @@ import { PiCookie } from "react-icons/pi";
 import { FiSearch, FiShoppingBag, FiArrowRight } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
+import ProfileDropdown from "./ProfileDropdown";
 
 const Navbar = () => {
   const [isLogin, setLogin] = useState(false);
@@ -11,6 +12,11 @@ const Navbar = () => {
     const token = localStorage.getItem("token");
     setLogin(!!token);
   };
+
+  const handleLogout = () => {
+  localStorage.removeItem("token");
+  window.location.reload(); 
+};
 
   useEffect(() => {
     const checkLogin = () => {
@@ -63,18 +69,18 @@ const Navbar = () => {
           </Link>
 
           {isLogin ? (
-            <Link
-              to="/profile"
-              className=" w-9 h-9 sm:w-10 sm:h-10 rounded-full border flex items-center justify-center hover:bg-[#fff1f2]"
-            >
-              <FaUser />
-            </Link>
+            <ProfileDropdown onLogout={handleLogout} />
           ) : (
             <Link
               to="/auth/login"
               className="h-9 sm:h-10 px-4 sm:px-5 text-sm sm:text-base bg-gradient-to-br from-[#ff9933] to-[#f43f5e] text-white rounded-full flex items-center"
             >
               Sign In
+            </Link>
+          )}
+          {!isLogin && (
+            <Link to="/auth/signup" className="hidden sm:flex items-center gap-1 text-sm text-[#e11d48] hover:text-[#be123c]">
+              Sign Up
             </Link>
           )}
         </div>

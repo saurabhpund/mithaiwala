@@ -51,14 +51,16 @@ export default function SignupPage() {
         password,
       });
 
-        console.log(response.status)
-      if(response.status !== 200){
-        setErrors((prev) => ({ ...prev, api: response.data.message || "Signup failed" }));
-      }else{
+      console.log(response.status);
+      if (response.status !== 200) {
+        setErrors((prev) => ({
+          ...prev,
+          api: response.data.message || "Signup failed",
+        }));
+      } else {
         console.log("Signup successful:", response.data);
         setErrors({});
       }
-
     } catch (err) {
       const message = err.response?.data?.message || "Something went wrong";
 
@@ -67,7 +69,6 @@ export default function SignupPage() {
       setLoading(false);
     }
   };
-
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[linear-gradient(135deg,#ff9966_0%,#e11d48_100%)] px-4">
@@ -129,9 +130,20 @@ export default function SignupPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full h-12 rounded-xl bg-[linear-gradient(135deg,#ff9966_0%,#e85d04_100%)] text-white font-semibold shadow-md active:scale-[0.98] transition disabled:opacity-60 cursor-pointer"
+            className="w-full h-12 rounded-xl bg-[linear-gradient(135deg,#ff9966_0%,#e85d04_100%)] text-white font-semibold shadow-md hover:brightness-105 active:scale-[0.98] transition-all duration-150 flex items-center justify-center gap-2 disabled:opacity-60"
           >
-            {loading ? "Creating..." : "Create Account"}
+            {loading ? (
+              <span className="flex items-center gap-1">
+                Creating
+                <span className="flex gap-1 ml-1">
+                  <span className="w-1.5 h-1.5 bg-white rounded-full animate-bounce [animation-delay:-0.3s]" />
+                  <span className="w-1.5 h-1.5 bg-white rounded-full animate-bounce [animation-delay:-0.15s]" />
+                  <span className="w-1.5 h-1.5 bg-white rounded-full animate-bounce" />
+                </span>
+              </span>
+            ) : (
+              "Create Account"
+            )}
           </button>
         </form>
 

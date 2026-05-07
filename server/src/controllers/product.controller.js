@@ -3,15 +3,24 @@ const { success } = require("../utils/helpers");
 
 const createProduct = async (req, res) => {
   try {
-    const { name, price_per_unit, unit, description } = req.body;
+    const {
+      name,
+      price_per_unit,
+      unit,
+      description,
+      min_order_quantity,
+      is_available,
+    } = req.body;
 
-    const image_url = req.file?.path; // Cloudinary URL
+    const image_url = req.file?.path;
 
     const product = await productService.addProduct({
       name,
       price_per_unit,
       unit,
       description,
+      min_order_quantity: parseInt(min_order_quantity) || 1,
+      is_available: is_available === "true",
       image_url,
     });
 
@@ -21,7 +30,6 @@ const createProduct = async (req, res) => {
     res.status(500).json({ message: "Error creating product" });
   }
 };
-
 
 const updateProduct = async (req, res) => {
   try {
@@ -55,7 +63,6 @@ const deleteProduct = async (req, res) => {
   }
 };
 
-
 const getProducts = async (req, res, next) => {
   try {
     const products = await productService.getProducts();
@@ -87,5 +94,5 @@ module.exports = {
   getProducts,
   getProductById,
   updateProduct,
-  deleteProduct
+  deleteProduct,
 };
