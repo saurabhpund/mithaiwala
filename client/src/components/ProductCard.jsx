@@ -15,7 +15,7 @@ export default function ProductCard({ product }) {
       {/* Image */}
       <div className="h-[160px] rounded mb-3 overflow-hidden relative">
         <img
-          src={Kajukatli} // temporary fallback
+          src={product.image_url || Kajukatli} // temporary fallback
           alt={name}
           className="w-full h-full object-cover"
         />

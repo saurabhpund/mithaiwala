@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import API from "../../api/axios";
 import Navbar from "../../components/Navbar";
+import EditProductModal from "./EditProductModal";
 
 export default function AdminProducts() {
   const [products, setProducts] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   //   if (user.role !== "ADMIN") {
   //     return <Navigate to="/" />;
@@ -43,6 +45,13 @@ export default function AdminProducts() {
   return (
     <div className="min-h-screen bg-[#fffdf7]">
       <Navbar />
+      {selectedProduct && (
+        <EditProductModal
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+          onSuccess={fetchProducts}
+        />
+      )}
       <section className="p-10">
         <div className="flex justify-between">
           <h1 className="text-2xl font-bold mb-6">Manage Products</h1>
@@ -71,7 +80,7 @@ export default function AdminProducts() {
               </p>
 
               <div className="flex gap-2 mt-3">
-                <button className="text-blue-500">Edit</button>
+                <button className="text-blue-500" onClick={() => setSelectedProduct(p)}>Edit</button>
 
                 <button
                   onClick={() => deleteProduct(p.id)}
