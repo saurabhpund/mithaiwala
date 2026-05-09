@@ -12,6 +12,7 @@ import ProductPage from "./pages/ProductPage";
 import AdminProducts from "./admin/page/AdminProduct";
 import ProtectedRoute from "./components/ProtectedRoutes";
 import AddProduct from "./admin/page/AddProduct";
+import AdminOrders from "./admin/page/AdminOrders";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -66,6 +67,8 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          <Route path="/admin/orders" element={<AdminOrders />} />
         </Routes>
       </BrowserRouter>
     </>
