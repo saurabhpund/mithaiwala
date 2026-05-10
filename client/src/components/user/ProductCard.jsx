@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import API from "../api/axios";
+import API from "../../api/axios";
 import Kajukatli from "../assets/kajukatli.jpg";
-import { useCart } from "../context/CartContext";
+import { useCart } from "../../context/CartContext";
 import { useState } from "react";
 
 export default function ProductCard({ product }) {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import API from "../../api/axios";
-import Navbar from "../../components/Navbar";
+import Navbar from "../../components/user/Navbar";
 import EditProductModal from "./EditProductModal";
 
 export default function AdminProducts() {

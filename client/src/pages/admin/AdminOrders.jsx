@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar";
 import API from "../../api/axios";
 
-import OrdersTable from "../components/orders/OrderTable";
-import OrderDrawer from "../components/orders/OrderDrawer";
+import OrdersHeader from "../../components/admin/orders/OrdersHeader";
+import OrdersTable from "../../components/admin/orders/OrdersTable";
+import OrderDrawer from "../../components/admin/orders/OrderDrawer";
 
 export default function AdminOrders() {
   const [orders, setOrders] = useState([]);
-  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [selectedOrder, setSelectedOrder] =
+    useState(null);
+
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
@@ -30,7 +33,7 @@ export default function AdminOrders() {
     }
   };
 
-  const updateOrderStatus = async (updatedStatus) => {
+  const updateOrderStatus = async () => {
     try {
       setSaving(true);
 
@@ -39,27 +42,27 @@ export default function AdminOrders() {
       await API.patch(
         `/orders/${selectedOrder.id}/status`,
         {
-          status: updatedStatus,
+          status: selectedOrder.status,
         },
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        },
+        }
       );
 
       setOrders((prev) =>
         prev.map((order) =>
           order.id === selectedOrder.id
-            ? { ...order, status: updatedStatus }
-            : order,
-        ),
+            ? {
+                ...order,
+                status: selectedOrder.status,
+              }
+            : order
+        )
       );
 
-      setSelectedOrder((prev) => ({
-        ...prev,
-        status: updatedStatus,
-      }));
+      setSelectedOrder(null);
     } catch (err) {
       console.error(err);
     } finally {
@@ -72,15 +75,7 @@ export default function AdminOrders() {
       <Navbar />
 
       <div className="max-w-7xl mx-auto px-6 py-10">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-[#4a3b32]">
-            Orders Management
-          </h1>
-
-          <p className="text-sm text-[#8c7b75] mt-1">
-            Manage customer orders and update delivery status
-          </p>
-        </div>
+        <OrdersHeader />
 
         <OrdersTable
           orders={orders}
