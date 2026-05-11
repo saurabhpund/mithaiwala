@@ -1,4 +1,4 @@
-import OrderRow from "./OrderRow";
+import OrderTableRow from "./OrderTableRow";
 import EmptyOrders from "./EmptyOrders";
 
 export default function OrdersTable({
@@ -39,7 +39,7 @@ export default function OrdersTable({
 
           <tbody>
             {orders.map((order) => (
-              <OrderRow
+              <OrderTableRow
                 key={order.id}
                 order={order}
                 setSelectedOrder={setSelectedOrder}

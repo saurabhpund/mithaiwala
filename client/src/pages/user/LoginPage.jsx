@@ -4,7 +4,7 @@ import { GiCandyCanes, GiIceCreamCone, GiCroissant } from "react-icons/gi";
 import { GiPartyPopper } from "react-icons/gi";
 import { BsCheck } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
-import API from "../api/axios";
+import API from "../../api/axios";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
 import { jwtDecode } from "jwt-decode";
 

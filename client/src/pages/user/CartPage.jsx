@@ -13,12 +13,12 @@ import {
 import { MdVerified } from "react-icons/md";
 
 /* Sample Images */
-import Kajukatli from "../assets/kajukatli.jpg";
-import Motichoor from "../assets/motichoor.jpg";
-import MysorePak from "../assets/gulabjam.jpg";
-import Navbar from "../components/Navbar";
-import API from "../api/axios";
-import { useCart } from "../context/CartContext";
+import Kajukatli from "../../assets/kajukatli.jpg";
+import Motichoor from "../../assets/motichoor.jpg";
+import MysorePak from "../../assets/gulabjam.jpg";
+import Navbar from "../../components/user/Navbar";
+import API from "../../api/axios";
+import { useCart } from "../../context/CartContext";
 
 export default function CartPage() {
   const { cart, fetchCart, removeFromCart, updateCart } = useCart();

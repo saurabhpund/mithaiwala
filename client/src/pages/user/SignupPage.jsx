@@ -3,7 +3,7 @@ import { BsCheck } from "react-icons/bs";
 import { PiCookie } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
-import API from "../api/axios";
+import API from "../../api/axios";
 
 export default function SignupPage() {
   const [fullName, setFullName] = useState("");

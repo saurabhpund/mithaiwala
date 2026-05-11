@@ -1,18 +1,18 @@
 import { useState } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Cart from "./pages/Cart";
-import Orders from "./pages/Orders";
-import LoginPage from "./pages/LoginPage";
-import SignupPage from "./pages/SignupPage";
-import CartPage from "./pages/CartPage";
-import Menu from "./pages/MenuPage";
-import ProductPage from "./pages/ProductPage";
-import AdminProducts from "./admin/page/AdminProduct";
-import ProtectedRoute from "./components/ProtectedRoutes";
-import AddProduct from "./admin/page/AddProduct";
-import AdminOrders from "./admin/page/AdminOrders";
+import Home from "./pages/user/Home";
+import Cart from "./pages/user/Cart";
+import Orders from "./pages/user/Orders";
+import LoginPage from "./pages/user/LoginPage";
+import SignupPage from "./pages/user/SignupPage";
+import CartPage from "./pages/user/CartPage";
+import Menu from "./pages/user/MenuPage";
+import ProductPage from "./pages/user/ProductPage";
+import AdminProducts from "./pages/admin/AdminProduct";
+import ProtectedRoute from "./components/user/ProtectedRoutes";
+import AddProduct from "./pages/admin/AddProduct";
+import AdminOrders from "./pages/admin/AdminOrders";
 
 function App() {
   const [count, setCount] = useState(0);

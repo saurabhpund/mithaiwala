@@ -1,12 +1,13 @@
-import Navbar from "../components/Navbar";
+
 import { FiSearch } from "react-icons/fi";
-import Kajukatli from "../assets/kajukatli.jpg";
-import Motichoor from "../assets/motichoor.jpg";
-import Gulabjam from "../assets/gulabjam.jpg";
-import Pista from "../assets/rasmalai.jpg";
+import Kajukatli from "../../assets/kajukatli.jpg";
+import Motichoor from "../../assets/motichoor.jpg";
+import Gulabjam from "../../assets/gulabjam.jpg";
+import Pista from "../../assets/rasmalai.jpg";
 import { useEffect, useState } from "react";
-import API from "../api/axios";
-import ProductCard from "../components/ProductCard";
+import API from "../../api/axios";
+import ProductCard from "../../components/user/ProductCard";
+import Navbar from "../../components/user/Navbar";
 
 export default function MenuPage() {
   const [search, setSearch] = useState("");

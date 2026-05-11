@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import Navbar from "../../components/Navbar";
 import API from "../../api/axios";
 
-import OrdersHeader from "../../components/admin/orders/OrdersHeader";
-import OrdersTable from "../../components/admin/orders/OrdersTable";
+import OrdersHeader from "../../components/admin/orders/OrderHeader";
+import OrdersTable from "../../components/admin/orders/OrderTable";
 import OrderDrawer from "../../components/admin/orders/OrderDrawer";
+import Navbar from "../../components/user/Navbar";
 
 export default function AdminOrders() {
   const [orders, setOrders] = useState([]);
