@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import API from "../../api/axios";
 import Navbar from "../../components/user/Navbar";
 import EditProductModal from "./EditProductModal";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminProducts() {
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const navigate = useNavigate();
 
   //   if (user.role !== "ADMIN") {
   //     return <Navigate to="/" />;

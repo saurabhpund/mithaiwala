@@ -4,12 +4,12 @@ import { FiSearch, FiShoppingBag, FiArrowRight } from "react-icons/fi";
 import { FaStar } from "react-icons/fa";
 import { FiTruck, FiAward } from "react-icons/fi";
 import { MdVerified } from "react-icons/md";
-import CollegeImage from "../assets/college.png";
+import CollegeImage from "../../assets/college.png";
 import Rasmalai from "../../assets/rasmalai.jpg";
 import Motichoor from "../../assets/motichoor.jpg";
 import Gulabjam from "../../assets/gulabjam.jpg";
 import Kajukatli from "../../assets/kajukatli.jpg";
-import Navbar from "../components/Navbar";
+import Navbar from "../../components/user/Navbar";
 
 export default function HomePage() {
   return (

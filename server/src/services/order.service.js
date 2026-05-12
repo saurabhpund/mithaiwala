@@ -1,3 +1,4 @@
+const db = require("../config/db");
 const cartModel = require("../models/cart.model");
 const orderModel = require("../models/order.model");
 
@@ -62,7 +63,7 @@ const getAllOrders = async () => {
       SELECT 
         oi.id,
         oi.quantity,
-        oi.price,
+        oi.total_price,
         p.name,
         p.image_url
       FROM order_items oi
