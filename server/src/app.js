@@ -10,8 +10,10 @@ const productRoutes = require("./routes/product.routes");
 const cartRoutes = require("./routes/cart.routes");
 const orderRoutes = require("./routes/order.routes");
 const helmet = require("helmet");
+const analyticsRoutes = require("./routes/analytics.routes");
 
 
+app.use("/api/analytics", analyticsRoutes);
 app.use(cors({ origin: "http://localhost:5173"}));
 app.use(helmet());
 app.use(express.json());
